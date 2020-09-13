@@ -1,3 +1,4 @@
+// Таранец Данил группа 20144
 #include <stdio.h>
 #include <math.h>
 #define pi    3.1415926535
