@@ -32,5 +32,13 @@ int main(){
             printf("(cos"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(" + i*sin"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(")\n");
         }
     }
+    // возведение в степень
+    if (inp == 2){
+        int k;
+        printf("Ввведите степень, в которую хотите возвести число:");
+        scanf("%d",&k);
+        printf("%.3lf",pow(sqrt(n*n+z*z),k));
+        printf("(cos"); printf("%.3lf",k*atan(z/(float)n)*180/(float)(pi)); printf(" + i*sin"); printf("%.3lf",k*atan(z/(float)n)*180/(float)(pi)); printf(")\n");;
+    }
     return 0;
 }
