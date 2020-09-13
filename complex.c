@@ -21,5 +21,16 @@ int main(){
         printf("(cos"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(" + i*sin"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(")\n");
         
     }
+    // обратное число
+    if (inp == 1){
+        printf("Обратное к введенному числу число:\t");
+        if (z/(float)(n*n+z*z) > 0){
+            printf("%.3lf",1/(float)sqrt(n*n+z*z));
+            printf("(cos"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(" - i*sin"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(")\n");;
+        }else{
+            printf("%.3lf",1/(float)sqrt(n*n+z*z));
+            printf("(cos"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(" + i*sin"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(")\n");
+        }
+    }
     return 0;
 }
