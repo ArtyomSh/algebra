@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <math.h>
+#define pi    3.1415926535
 int main(){
     // ввод числа
     double n,z;
@@ -12,5 +14,12 @@ int main(){
     printf("Возможные операции:\n 0 - вывести тригонометрическую запись числа\n 1 - вывести обратное число\n 2 - возвести в степень\n 3 - взять корень n-той степени\n");
     printf("Выберите операцию:");
     scanf("%d",&inp);
+    // тригонометрическая запись
+    if (inp == 0){
+        printf("Тригонометрическая запись числа:\t");
+        printf("%.3lf",sqrt(n*n+z*z));
+        printf("(cos"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(" + i*sin"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(")\n");
+        
+    }
     return 0;
 }
