@@ -1,12 +1,16 @@
 #include <stdio.h>
 int main(){
-    double n,z;
-    int inp;
     // ввод числа
+    double n,z;
     printf("Введите вещественную часть числа:");
     scanf("%lf",&n);
     printf("Введите мнимую часть числа:");
     scanf("%lf",&z);
-    printf("Ваше число:\t"); printf("%lf",n); printf("+"); printf("%lf",z); printf("i");
+    printf("\nВаше число:\t"); printf("%lf",n); printf("+"); printf("%lf",z); printf("i\n");
+    // выбор операции
+    int inp;
+    printf("Возможные операции:\n 0 - вывести тригонометрическую запись числа\n 1 - вывести обратное число\n 2 - возвести в степень\n 3 - взять корень n-той степени\n");
+    printf("Выберите операцию:");
+    scanf("%d",&inp);
     return 0;
 }
