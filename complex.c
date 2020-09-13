@@ -38,7 +38,16 @@ int main(){
         printf("Ввведите степень, в которую хотите возвести число:");
         scanf("%d",&k);
         printf("%.3lf",pow(sqrt(n*n+z*z),k));
-        printf("(cos"); printf("%.3lf",k*atan(z/(float)n)*180/(float)(pi)); printf(" + i*sin"); printf("%.3lf",k*atan(z/(float)n)*180/(float)(pi)); printf(")\n");;
+        printf("(cos"); printf("%.3lf",k*atan(z/(float)n)*180/(float)(pi)); printf(" + i*sin"); printf("%.3lf",k*atan(z/(float)n)*180/(float)(pi)); printf(")\n");
+    }
+    // все корни степени n
+    if (inp == 3){
+        int l;
+        printf("Ввведите значение степени корня, который вы хотите извлечь из числа:");
+        scanf("%d",&l);
+        printf("%.3lf",pow(sqrt(n*n+z*z),1/(float)l));
+        printf("(cos("); printf("%.3lf",(atan(z/(float)n))/(float)l); printf("+2πk/"); printf("%d",l); printf(") + i*sin("); printf("%.3lf",(atan(z/(float)n))/(float)l); printf("+2πk/"); printf("%d",l); printf(")\n");
+        printf("где k - любое целое число\n");
     }
     return 0;
 }
