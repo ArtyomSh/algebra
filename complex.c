@@ -36,11 +36,19 @@ int main(){
     printf("\nВозможные операции:\n 0 - вывести тригонометрическую запись числа\n 1 - вывести обратное число\n 2 - возвести в степень\n 3 - взять корень n-той степени\n");
     printf("Выберите операцию:");
     scanf("%d",&inp);
+    // вычисление аргумента
+    double argument = 0.0;
+    if (n>0){
+        argument = atan(z/(float)n);}
+    if (n<0 && z<0){
+        argument = atan(z/(float)n) - pi;}
+    if (n<0 && z>0){
+        argument = atan(z/(float)n) + pi;}
     // тригонометрическая запись
     if (inp == 0){
         printf("Тригонометрическая запись числа:\t");
         printf("%.3lf",sqrt(n*n+z*z));
-        printf("(cos"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(" + i*sin"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(")\n");
+        printf("(cos"); printf("%.3lf",argument); printf(" + i*sin"); printf("%.3lf",argument); printf(")\n");
         
     }
     // обратное число
@@ -48,10 +56,10 @@ int main(){
         printf("Обратное к введенному числу число:\t");
         if (z/(float)(n*n+z*z) > 0){
             printf("%.3lf",1/(float)sqrt(n*n+z*z));
-            printf("(cos"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(" - i*sin"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(")\n");;
+            printf("(cos"); printf("%.3lf",argument); printf(" - i*sin"); printf("%.3lf",argument); printf(")\n");;
         }else{
             printf("%.3lf",1/(float)sqrt(n*n+z*z));
-            printf("(cos"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(" + i*sin"); printf("%.3lf",atan(z/(float)n)*180/(float)(pi)); printf(")\n");
+            printf("(cos"); printf("%.3lf",argument); printf(" + i*sin"); printf("%.3lf",argument); printf(")\n");
         }
     }
     // возведение в степень
@@ -60,7 +68,7 @@ int main(){
         printf("Ввведите степень, в которую хотите возвести число:");
         scanf("%d",&k);
         printf("%.3lf",pow(sqrt(n*n+z*z),k));
-        printf("(cos"); printf("%.3lf",k*atan(z/(float)n)*180/(float)(pi)); printf(" + i*sin"); printf("%.3lf",k*atan(z/(float)n)*180/(float)(pi)); printf(")\n");
+        printf("(cos"); printf("%.3lf",k*argument); printf(" + i*sin"); printf("%.3lf",k*argument); printf(")\n");
     }
     // все корни степени n
     if (inp == 3){
@@ -68,7 +76,7 @@ int main(){
         printf("Ввведите значение степени корня, который вы хотите извлечь из числа:");
         scanf("%d",&l);
         printf("%.3lf",pow(sqrt(n*n+z*z),1/(float)l));
-        printf("(cos("); printf("%.3lf",(atan(z/(float)n))/(float)l); printf("+2πk/"); printf("%d",l); printf(") + i*sin("); printf("%.3lf",(atan(z/(float)n))/(float)l); printf("+2πk/"); printf("%d",l); printf(")\n");
+        printf("(cos("); printf("%.3lf",argument/(float)l); printf("+2πk/"); printf("%d",l); printf(") + i*sin("); printf("%.3lf",argument/(float)l); printf("+2πk/"); printf("%d",l); printf(")\n");
         printf("где k - любое целое число\n");
     }
     return 0;
