@@ -44,6 +44,14 @@ int main(){
         argument = atan(z/(float)n) - pi;}
     if (n<0 && z>0){
         argument = atan(z/(float)n) + pi;}
+        if (n == 0 && z>0){
+        argument = pi/(float)2;}
+    if (n == 0 && z<0){
+        argument = - pi/(float)2;}
+    if (n>0 && z == 0){
+        argument = 0;}
+    if (n<0 && z == 0){
+        argument = -pi;}
     // тригонометрическая запись
     if (inp == 0){
         printf("Тригонометрическая запись числа:\t");
