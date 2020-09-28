@@ -22,15 +22,20 @@ int main(){
     double cx = c1/(float)c2, cy = c2/(float)c3, cz = c1/(float)c3;
     if (ax == bx && bx == cx && ay == by && by == cy && az == bz && bz == cz){
         printf("\nВсе введенные векторы коллинеарны\n");
+        printf("Коэффициент коллинеарности векторов 1 и 2 равен %f, векторов 2 и 3 равен %f, а векторов 1 и 3 равен %f\n", 1/(float)ax, 1/(float)ay, 1/(float)az);
     } else {
         if (ax == bx && bx == cx){
-            printf("\nВекторы 1 и 2 коллинеарны\n");
+            printf("\nВекторы 1 и 2 коллинеарны");
+            printf("Коэффициент коллинеарности равен %f", 1/(float)ax);
+            
         }
         if (ay == by && by == cy){
             printf("\nВекторы 2 и 3 коллинеарны\n");
+            printf("Коэффициент коллинеарности равен %f", 1/(float)ay);
         }
         if (az == bz && bz == cz){
             printf("\nВекторы 1 и 3 коллинеарны\n");
+            printf("Коэффициент коллинеарности равен %f", 1/(float)az);
         }
     }
 }
