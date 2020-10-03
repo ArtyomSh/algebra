@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 int main(){
     double a1,b1,c1;
     double a2,b2,c2;
     double a3,b3,c3;
-    int flag1 = 0, flag2 = 0, flag3 = 0;
+    int rang1 = 0, rang2 = 0;
     printf("Введите через пробел координаты первого вектора:");
     scanf("%lf%lf%lf",&a1,&b1,&c1);
     printf("Введите через пробел координаты второго вектора:");
@@ -14,64 +16,74 @@ int main(){
     double d = a1*b2*c3 + a3*b1*c2 + a2*b3*c1 - a3*b2*c1 - a1*b3*c2 - a2*b1*c3;
     if (d == 0){
         printf("\nВекторы компланарны\n");
-        flag1 = 1;
+        rang1 = 1;
     } else {
         printf("\nВекторы некомпланарны\n");
     }
     // проверка коллинераности
-    double ax = a1/(float)a2, ay = a2/(float)a3, az = a1/(float)a3;
-    double bx = b1/(float)b2, by = b2/(float)b3, bz = b1/(float)b3;
-    double cx = c1/(float)c2, cy = c2/(float)c3, cz = c1/(float)c3;
-    if (ax == bx && bx == cx && ay == by && by == cy && az == bz && bz == cz){
-        printf("\nВсе введенные векторы коллинеарны\n");
-        printf("Коэффициент коллинеарности векторов 1 и 2 равен %f, векторов 2 и 3 равен %f, а векторов 1 и 3 равен %f\n", 1/(float)ax, 1/(float)ay, 1/(float)az);
-        flag2 = 1;
-    } else {
-        if (ax == bx && bx == cx){
-            printf("\nВекторы 1 и 2 коллинеарны\n");
-            printf("Коэффициент коллинеарности равен %f", 1/(float)ax);
-            flag3 = 1;
-        }
-        if (ay == by && by == cy){
-            printf("\nВекторы 2 и 3 коллинеарны\n");
-            printf("Коэффициент коллинеарности равен %f", 1/(float)ay);
-            flag3 = 1;
-        }
-        if (az == bz && bz == cz){
-            printf("\nВекторы 1 и 3 коллинеарны\n");
-            printf("Коэффициент коллинеарности равен %f", 1/(float)az);
-            flag3 = 1;
-        }
-        if (a1 == 0 && a2 == 0 && a3 == 0 && b1 == 0 && b2 == 0 && b3 == 0 && c1 == 0 && c2 == 0 && c3 == 0){
-            printf("\nВсе введенные векторы коллинеарны, коэффициенты коллинеарности равны 0\n");
-            flag2 = 1;
-        }else{
-            if (a1 == 0 && a2 == 0 && b1 == 0 && b2 == 0 && c1 == 0 && c2 == 0){
-                printf("\nВекторы 1 и 2 коллинеарны\n");
-                printf("Коэффициент коллинеарности равен 0\n");
-                flag3 = 1;
-            }
-            if (a1 == 0 && a3 == 0 && b1 == 0 && b3 == 0 && c1 == 0 && c3 == 0){
-                printf("\nВекторы 1 и 3 коллинеарны\n");
-                printf("Коэффициент коллинеарности равен 0\n");
-                flag3 = 1;
-            }
-            if (a3 == 0 && a2 == 0 && b3 == 0 && b2 == 0 && c3 == 0 && c2 == 0){
-                printf("\nВекторы 2 и 3 коллинеарны\n");
-                printf("Коэффициент коллинеарности равен 0\n");
-                flag3 = 1;
+    if ((b1*c2-c1*b2) == 0 && (c1*a2-a1*c2) == 0 && (a1*b2-b1*a2) == 0){
+        printf("\nВекторы 1 и 2 коллинеарны\n");
+        double k = a1/(float)a2;
+        if (k == 0 || a2 == 0){
+            k = b1/(float)b2;
+            if (k == 0 || b2 == 0){
+                k = c1/(float)c2;
+                if(c2 == 0){
+                    k = 0;
+                }
             }
         }
+        if(fabs(k)<1){
+            k = 1/(float)k;
+        }
+        printf("\nКоэффициент коллинеарности равен %lf\n", k);
+        rang2 += 1;
+    }
+    if ((b1*c3-c1*b3) == 0 && (c1*a3-a1*c3) == 0 && (a1*b3-b1*a3) == 0){
+        printf("\nВекторы 1 и 3 коллинеарны\n");
+        double k = a1/(float)a3;
+        if (k == 0 || a3 == 0){
+            k = b1/(float)b3;
+            if (k == 0 || b3 == 0){
+                k = c1/(float)c3;
+                if (c3 == 0){
+                    k = 0;
+                }
+            }
+        }
+        if(fabs(k)<1){
+            k = 1/(float)k;
+        }
+        printf("\nКоэффициент коллинеарности равен %lf\n", k);
+        rang2 += 1;
+    }
+    if ((b2*c3-c2*b3) == 0 && (c2*a3-a2*c3) == 0 && (a2*b3-b2*a3) == 0){
+        printf("\nВекторы 2 и 3 коллинеарны\n");
+        double k = a2/(float)a3;
+        if (k == 0 || a3 == 0){
+            k = b2/(float)b3;
+            if (k == 0 || b3 == 0){
+                k = c2/(float)c3;
+                if (c3 == 0){
+                    k = 0;
+                }
+            }
+        }
+        if(fabs(k)<1){
+            k = 1/(float)k;
+        }
+        printf("\nКоэффициент коллинеарности равен %lf\n", k);
+        rang2 += 1;
     }
     // ранг системы векторов
-    if ((flag1 || flag3) && flag2 == 0){
-        printf("\nРанг системы векторов равен 2\n");
+    if ((rang1 == 1 && rang2 == 0) || (rang1 == 0 && rang2 == 1)){
+        printf("\nРанг системы векторов равен 2");
     }
-    if (flag2){
-        printf("\nРанг системы векторов равен 1\n");
+    if (rang2 >= 2){
+        printf("\nРанг системы векторов равен 1");
     }
-    if (flag1 == 0 && flag2 == 0 && flag3 == 0){
-        printf("\nРанг системы векторов равен 3\n");
+    if (rang1 == 0 && rang2 == 0){
+        printf("\nРанг системы векторов равен 3");
     }
     
 }
