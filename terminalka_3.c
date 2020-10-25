@@ -21,7 +21,7 @@ int main(){
     }
     
     //упорядочивание
-    float max = 0.0;
+    double max = -INFINITY;
     int max_ind = 0;
     for(int i = 0; i<n; i++){
         for(int j = i; j<k; j++){
@@ -30,7 +30,7 @@ int main(){
                 max_ind = j;
             }
         }
-        if(max == 0.0){
+        if(max == -INFINITY){
             break;
         }
         for(int j = 0; j<n; j++){
@@ -38,14 +38,20 @@ int main(){
             A[i][j] = A[max_ind][j];
             A[max_ind][j] = p;
         }
-        max = 0.0;
+        max = -INFINITY;
     }
     
     // приведение к ступенчатому виду
+    float koef;
+    int m = 0;
     for(int q = 0; q<k-1; q++){
         for(int i = q; i<k-1;i++){
-            float koef = -(A[i+1][q]/(float)A[q][q]);
-            for(int j = q; j<n; j++){
+            for(int j = 0; j<n; j++){
+                if (A[q][q+m] == 0){ m += 1;}
+                else{break;}
+            }
+            koef = -(A[i+1][q+m]/(float)A[q][q+m]);
+            for(int j = q+m; j<n; j++){
                 A[i+1][j] = A[q][j]*koef + A[i+1][j];
             }
         }
