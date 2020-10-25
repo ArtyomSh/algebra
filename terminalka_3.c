@@ -50,4 +50,24 @@ int main(){
             }
         }
     }
+    
+    // высчитывание ранга
+    int egnar = 0;
+    for(int i = 0; i<k; i++){
+        int count = 0;
+        for(int j = 0; j<n; j++){
+            if(fabsf(A[i][j]) == 0){
+                count += 1;
+            }
+        }
+        if(count == n){
+            egnar += 1;
+        }
+    }
+    printf("\nРанг системы векторов равен %d",(k-egnar));
+    if(egnar == 0){
+        printf(" и система линейно независима\n");
+    }else{
+        printf(" и система линейно зависима\n");
+    }
 }
