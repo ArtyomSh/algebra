@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+
 int main(){
     int n;
     int k;
@@ -17,15 +19,35 @@ int main(){
             scanf("%f",&A[i][j]);
         }
     }
-    // приведение к ступенчатому виду
-    int m = 0;
-    for(int q = 0; q<k-1; q++){
-        for(int i = m; i<k-1;i++){
-            float koef = -(A[i+1][m]/(float)A[m][m]);
-            for(int j = m; j<n; j++){
-                A[i+1][j] = A[m][j]*koef + A[i+1][j];
+    
+    //упорядочивание
+    float max = 0.0;
+    int max_ind = 0;
+    for(int i = 0; i<n; i++){
+        for(int j = i; j<k; j++){
+            if(fabsf(A[j][i]) > max){
+                max = A[j][i];
+                max_ind = j;
             }
         }
-        m += 1;
+        if(max == 0.0){
+            break;
+        }
+        for(int j = 0; j<n; j++){
+            float p = A[i][j];
+            A[i][j] = A[max_ind][j];
+            A[max_ind][j] = p;
+        }
+        max = 0.0;
+    }
+    
+    // приведение к ступенчатому виду
+    for(int q = 0; q<k-1; q++){
+        for(int i = q; i<k-1;i++){
+            float koef = -(A[i+1][q]/(float)A[q][q]);
+            for(int j = q; j<n; j++){
+                A[i+1][j] = A[q][j]*koef + A[i+1][j];
+            }
+        }
     }
 }
