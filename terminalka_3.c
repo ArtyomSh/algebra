@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
 int main(){
     int n;
     int k;
@@ -19,61 +18,45 @@ int main(){
             scanf("%f",&A[i][j]);
         }
     }
-    
-    //упорядочивание
-    double max = -INFINITY;
-    int max_ind = 0;
+    //преобразую массив
     for(int i = 0; i<n; i++){
-        for(int j = i; j<k; j++){
-            if(fabsf(A[j][i]) > max){
-                max = A[j][i];
-                max_ind = j;
-            }
-        }
-        if(max == -INFINITY){
-            break;
-        }
-        for(int j = 0; j<n; j++){
-            float p = A[i][j];
-            A[i][j] = A[max_ind][j];
-            A[max_ind][j] = p;
-        }
-        max = -INFINITY;
-    }
-    
-    // приведение к ступенчатому виду
-    float koef;
-    int m = 0;
-    for(int q = 0; q<k-1; q++){
-        for(int i = q; i<k-1;i++){
-            for(int j = 0; j<n; j++){
-                if (A[q][q+m] == 0){ m += 1;}
-                else{break;}
-            }
-            koef = -(A[i+1][q+m]/(float)A[q][q+m]);
-            for(int j = q+m; j<n; j++){
-                A[i+1][j] = A[q][j]*koef + A[i+1][j];
+        for(int j = i; j<k;j++){
+            if(A[j][i] != 0){
+                for(int q = 0; q<j; q++){
+                    float koef = -(A[q][i]/(float)A[j][i]);
+                    for(int l = 0; l<n; l++){
+                        A[q][l] = A[q][l] + koef*A[j][l];
+                    }
+                }
+                for(int q = j+1; q<k; q++){
+                    float koef = -(A[q][i]/(float)A[j][i]);
+                    for(int l = 0; l<n; l++){
+                        A[q][l] = A[q][l] + koef*A[j][l];
+                    }
+                }
+                break;
             }
         }
     }
-    
-    // высчитывание ранга
+    // высчитываю ранг
     int egnar = 0;
-    for(int i = 0; i<k; i++){
-        int count = 0;
-        for(int j = 0; j<n; j++){
-            if(fabsf(A[i][j]) == 0){
-                count += 1;
+        for(int i = 0; i<k; i++){
+            int count = 0;
+            for(int j = 0; j<n; j++){
+                if(fabsf(A[i][j]) == 0){
+                    count += 1;
+                }
+            }
+            if(count == n){
+                egnar += 1;
             }
         }
-        if(count == n){
-            egnar += 1;
+        printf("\nРанг системы векторов равен %d",(k-egnar));
+        if(egnar == 0){
+            printf(" и система линейно независима\n");
+        }else{
+            printf(" и система линейно зависима\n");
         }
-    }
-    printf("\nРанг системы векторов равен %d",(k-egnar));
-    if(egnar == 0){
-        printf(" и система линейно независима\n");
-    }else{
-        printf(" и система линейно зависима\n");
-    }
+    
 }
+
