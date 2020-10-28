@@ -37,6 +37,39 @@ int main(){
                 break;
             }
         }
+        for(int i = 0; i<k; i++){
+            for(int j = 0; j<n; j++){
+                printf("%f ",A[i][j]);
+            }
+            printf("\n");
+        }
+        printf("\n");
+    }
+    for(int i = n-1; i>=0; i--){
+        for(int j = k-1-(n-1-i); j>=0;j--){
+            if(A[j][i] != 0){
+                for(int q = 0; q<j; q++){
+                    float koef = -(A[q][i]/(float)A[j][i]);
+                    for(int l = 0; l<n; l++){
+                        A[q][l] = A[q][l] + koef*A[j][l];
+                    }
+                }
+                for(int q = j+1; q<k; q++){
+                    float koef = -(A[q][i]/(float)A[j][i]);
+                    for(int l = 0; l<n; l++){
+                        A[q][l] = A[q][l] + koef*A[j][l];
+                    }
+                }
+                break;
+            }
+        }
+        for(int i = 0; i<k; i++){
+            for(int j = 0; j<n; j++){
+                printf("%f ",A[i][j]);
+            }
+            printf("\n");
+        }
+        printf("\n");
     }
     // высчитываю ранг
     int egnar = 0;
