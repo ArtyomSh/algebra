@@ -18,60 +18,43 @@ int main(){
             scanf("%f",&A[i][j]);
         }
     }
-    //преобразую массив
-    for(int i = 0; i<n; i++){
-        for(int j = i; j<k;j++){
-            if(A[j][i] != 0){
-                for(int q = 0; q<j; q++){
-                    float koef = -(A[q][i]/(float)A[j][i]);
-                    for(int l = 0; l<n; l++){
-                        A[q][l] = A[q][l] + koef*A[j][l];
-                    }
+    int i = 0;
+    int j = 0;
+    while(i<n){
+        while(j<k){
+            //max в столбце
+            float max = 0.0;
+            int r = 0;
+            for(int q = j; q<k; q++){
+                if(fabsf(A[q][i]) > max){
+                    max = A[q][i];
+                    r = q;
                 }
-                for(int q = j+1; q<k; q++){
-                    float koef = -(A[q][i]/(float)A[j][i]);
-                    for(int l = 0; l<n; l++){
-                        A[q][l] = A[q][l] + koef*A[j][l];
-                    }
+            }
+            //перестановка
+            if(r){
+                for(int q = 0; q<n; q++){
+                    float p = A[j][q];
+                    A[j][q] = A[r][q];
+                    A[r][q] = p;
                 }
+            }
+            //
+            if(A[j][i] == 0){
                 break;
             }
-        }
-        for(int i = 0; i<k; i++){
-            for(int j = 0; j<n; j++){
-                printf("%f ",A[i][j]);
-            }
-            printf("\n");
-        }
-        printf("\n");
-    }
-    for(int i = n-1; i>=0; i--){
-        for(int j = k-1-(n-1-i); j>=0;j--){
-            if(A[j][i] != 0){
-                for(int q = 0; q<j; q++){
-                    float koef = -(A[q][i]/(float)A[j][i]);
-                    for(int l = 0; l<n; l++){
-                        A[q][l] = A[q][l] + koef*A[j][l];
-                    }
+            //зануление
+            for(int q = j+1; q<k; q++){
+                float koef=-(A[q][i]/(float)A[j][i]);
+                for(int l = 0; l<n; l++){
+                    A[q][l] = A[q][l] + koef*A[j][l];
                 }
-                for(int q = j+1; q<k; q++){
-                    float koef = -(A[q][i]/(float)A[j][i]);
-                    for(int l = 0; l<n; l++){
-                        A[q][l] = A[q][l] + koef*A[j][l];
-                    }
-                }
-                break;
             }
+            j += 1;
+            i += 1;
         }
-        for(int i = 0; i<k; i++){
-            for(int j = 0; j<n; j++){
-                printf("%f ",A[i][j]);
-            }
-            printf("\n");
-        }
-        printf("\n");
+        i += 1;
     }
-    // высчитываю ранг
     int egnar = 0;
         for(int i = 0; i<k; i++){
             int count = 0;
