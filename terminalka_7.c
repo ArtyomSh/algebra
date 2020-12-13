@@ -8,19 +8,18 @@ int main(){
     scanf("%d",&m);
     printf("Введите количество переменных:");
     scanf("%d",&n);
-    double** A = (double**)malloc(m*sizeof(float*));
-    printf("Введите расширенную матрицу системы:\n");
+    double** A = (double**)malloc(m*sizeof(double*));
+    printf("Введите матрицу системы:\n");
     for(int i = 0; i<m; i++){
-        A[i] = (double*)malloc((n+1)*sizeof(double));
+        A[i] = (double*)malloc((n)*sizeof(double));
     }
     for(int i = 0; i<m; i++){
-        for(int j = 0; j<n+1; j++){
+        for(int j = 0; j<n; j++){
             scanf("%lf",&A[i][j]);
         }
     }
     int i = 0;
     int j = 0;
-    int znak = 0;
     while(i<m){
         while(j<n){
             //max в столбце
@@ -34,11 +33,7 @@ int main(){
             }
             //перестановка
             if(r){
-                znak += 1;
-                if(r == j){
-                    znak -= 1;
-                }
-                for(int q = 0; q<n+1; q++){
+                for(int q = 0; q<n; q++){
                     double p = A[j][q];
                     A[j][q] = A[r][q];
                     A[r][q] = p;
@@ -49,10 +44,13 @@ int main(){
                 break;
             }
             //зануление
+            double koef;
             for(int q = j+1; q<m; q++){
-                double koef=-(A[q][i]/(double)A[j][i]);
-                for(int l = 0; l<n+1; l++){
-                    A[q][l] = A[q][l] + koef*A[j][l];
+                if(A[j][i] != 0){
+                    koef=-(A[q][i]/(double)A[j][i]);
+                    for(int l = 0; l<n; l++){
+                        A[q][l] = A[q][l] + koef*A[j][l];
+                    }
                 }
             }
             j += 1;
@@ -60,9 +58,8 @@ int main(){
         }
         i += 1;
     }
-    
     //зануление в обратную сторону
-    int f = n-1;
+    /*int f = n-1;
     int g = m-1;
     double koef;
     while(f>=0){
@@ -73,7 +70,7 @@ int main(){
                 }else{
                     break;
                 }
-                for(int l = n+1; l>=0; l--){
+                for(int l = n; l>=0; l--){
                     A[q][l] = A[q][l] + koef*A[g][l];
                 }
             }
@@ -81,18 +78,18 @@ int main(){
             g -= 1;
         }
         f -= 1;
-    }
+    }*/
     
     //удаление нулевых строк
     int count = 0;
     int count_null = 0;
     for(i = 0; i<m; i++){
-        for(j = 0; j<n+1; j++){
-            if(fabs(A[i][j]) == 0){
+        for(j = 0; j<n; j++){
+            if(fabs(A[i][j]) == 0 || fabs(A[i][j])*1000000 < 10){
                 count += 1;
             }
         }
-        if(count == n+1){
+        if(count == n){
             count_null += 1;
         }
         count = 0;
@@ -100,9 +97,10 @@ int main(){
     m -= count_null;
     
     for(int i = 0; i<m; i++){
-        for(int j = 0; j<n+1; j++){
+        for(int j = 0; j<n; j++){
             printf("%lf ",A[i][j]);
         }
         printf("\n");
     }
+    printf("\n");
 }
