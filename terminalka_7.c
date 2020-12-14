@@ -58,27 +58,6 @@ int main(){
         }
         i += 1;
     }
-    //зануление в обратную сторону
-    /*int f = n-1;
-    int g = m-1;
-    double koef;
-    while(f>=0){
-        while(g>=0){
-            for(int q = g-1; q>=0; q--){
-                if(A[g][f] != 0){
-                    koef=-(A[q][f]/(double)A[g][f]);
-                }else{
-                    break;
-                }
-                for(int l = n; l>=0; l--){
-                    A[q][l] = A[q][l] + koef*A[g][l];
-                }
-            }
-            f -= 1;
-            g -= 1;
-        }
-        f -= 1;
-    }*/
     
     //удаление нулевых строк
     int count = 0;
@@ -96,11 +75,92 @@ int main(){
     }
     m -= count_null;
     
+    //создание матрицы решений
+    double** B = (double**)malloc(m*sizeof(double*));
     for(int i = 0; i<m; i++){
-        for(int j = 0; j<n; j++){
-            printf("%lf ",A[i][j]);
+        B[i] = (double*)malloc((n+1)*sizeof(double));
+    }
+    for(int i = 0; i<m; i++){
+        for(int j = 0; j<n+1; j++){
+            B[i][j] = 0;
+        }
+    }
+    
+    //заполнение матрицы решений
+    for(int i = m-1; i>=0; i--){
+        int j = 0;
+        while(fabs(A[i][j]) == 0){
+            j += 1;
+        }
+        B[i][n] = j;
+        for(int l = j+1; l<n; l++){
+            B[i][l] = -A[i][l]/(double)A[i][j];
+        }
+    }
+    
+    //выражение связанных переменных через свободные
+    int q = m-1;
+    while (q>=0){
+        int k = B[q][n];
+        for(int l = q-1; l>=0; l--){
+            for(int g = 0; g<n; g++){
+                B[l][g] += B[l][k]*B[q][g];
+            }
+            B[l][k] = 0;
+        }
+        q -= 1;
+    }
+    
+    //создание матрицы ответов
+    double** C = (double**)malloc(n*sizeof(double*));
+    for(int i = 0; i<n; i++){
+        C[i] = (double*)malloc((n-m)*sizeof(double));
+    }
+    for(int i = 0; i<n; i++){
+        for(int j = 0; j<n-m; j++){
+            C[i][j] = 0;
+        }
+    }
+    
+    //заполнение свободных переменных единицами и нулями для нахождения ФСР
+    int l = 0;
+    int flag = 1;
+    for(int i = 0; i<n; i++){
+        for(int j = 0; j<m; j++){
+            if(i == B[j][n]){
+                flag = 0;
+                break;
+            }
+            flag = 1;
+        }
+        if(flag){
+            C[i][l] = 1;
+            l += 1;
+        }
+    }
+    
+    //нахождение фундаментальной системы решений
+    for(int j = 0; j<n-m; j++){
+        for(int q = 0; q<m; q++){
+            int k = B[q][n];
+            double sum = 0;
+            for(int i = 0; i<n; i++){
+                sum += B[q][i]*C[i][j];
+            }
+            C[k][j] = sum;
+            sum = 0;
+        }
+    }
+    
+    //вывод ответа
+    printf("Фундаменатльная система решений:\n");
+    for(int i = 0; i<n; i++){
+        for(int j = 0; j<n-m; j++){
+            printf("x%d = ",i+1);
+            printf("%.3lf\t",C[i][j]);
         }
         printf("\n");
     }
     printf("\n");
 }
+
